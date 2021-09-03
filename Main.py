@@ -24,10 +24,12 @@ def abrirArchivo():
         return texto
 
 
-
+def main():
+    ventanaPrincipal = VentanaPrincipal()
+    return
 
 if __name__ == "__main__":
-    ventanaPrincipal = VentanaPrincipal()
+    main()
     while(True):
         print("\nBienvenido Usuario")
         print(''''Menú provisional

@@ -1,4 +1,24 @@
+from tkinter import filedialog, Tk
 
+#====================================Declarando función para abrir un archivo========================================
+def abrirArchivo():
+    Tk().withdraw()
+    archivo = filedialog.askopenfile(
+        title = "Seleccionar un archivo PXLA",
+        initialdir = "./",
+        filetypes= (
+            ("archivos PXLA", "*.pxla"),
+            ("todos los archivos", "*.*")
+        )
+    )
+    if archivo is None:
+        print('No se seleccionó ningun archivo\n')
+        return None
+    else:
+        texto = archivo.read()
+        archivo.close()
+        print('Lectura exitosa\n')
+        return texto
 
 
 if __name__ == "__main__":
@@ -14,7 +34,8 @@ if __name__ == "__main__":
         opcion = int(input("Ingrese una opción: "))
         if opcion == 1:
             print("\nEscogió la opción 1 - Cargar archivo")
-            input("Presione Enter para continuar....")
+            abrirArchivo()
+
         elif opcion == 2:
             print("\nEscogió la opción 2 - Analizar archivo")
             input("Presione Enter para continuar....")

@@ -1,4 +1,7 @@
 from tkinter import filedialog, Tk
+from tkinter import *
+from tkinter import ttk
+from VentanaPrincipal import VentanaPrincipal
 
 #====================================Declarando función para abrir un archivo========================================
 def abrirArchivo():
@@ -21,7 +24,10 @@ def abrirArchivo():
         return texto
 
 
+
+
 if __name__ == "__main__":
+    ventanaPrincipal = VentanaPrincipal()
     while(True):
         print("\nBienvenido Usuario")
         print(''''Menú provisional

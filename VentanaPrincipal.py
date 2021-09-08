@@ -1,6 +1,28 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog, Tk
 
+#====================================Declarando función para abrir un archivo========================================
+def abrirArchivo():
+    Tk().withdraw()
+    archivo = filedialog.askopenfile(
+        title = "Seleccionar un archivo PXLA",
+        initialdir = "./",
+        filetypes= (
+            ("archivos PXLA", "*.pxla"),
+            ("todos los archivos", "*.*")
+        )
+    )
+    if archivo is None:
+        print('No se seleccionó ningun archivo\n')
+        return None
+    else:
+        texto = archivo.read()
+        archivo.close()
+        print('Lectura exitosa\n')
+        return texto
+
+#====================================Clase de venta Principal del programa=============================================
 class VentanaPrincipal:
     def __init__(self):
         self.raiz = Tk()
@@ -19,7 +41,7 @@ class VentanaPrincipal:
         
         # Define el widget Text 'self.tinfo ' en el que se
         # pueden introducir varias líneas de texto:
-        self.tinfo = Text(self.raiz, width=40, height=10)
+        self.tinfo = Text(self.raiz, width=20, height=10 )
 
         # Sitúa la caja de texto 'self.tinfo' en la parte
         # superior de la ventana 'self.raiz':
@@ -37,7 +59,7 @@ class VentanaPrincipal:
         # cuando sea presionado, el método destruirá o
         # terminará la aplicación-ventana 'self.raíz' con 
         # 'self.raiz.destroy'
-        self.bsalir = ttk.Button(self.raiz, text='Salir', command=self.raiz.destroy)
+        self.bsalir = ttk.Button(self.raiz, text='Salir', command=quit)
                                  
         # Coloca el botón 'self.bsalir' a la derecha del 
         # objeto anterior.                
@@ -67,6 +89,7 @@ class VentanaPrincipal:
         info7 = str(self.raiz.winfo_id())
         info8 = self.raiz.winfo_name()
         info9 = self.raiz.winfo_manager()
+        info10 = abrirArchivo()
         
         # Construye una cadena de texto con toda la
         # información obtenida:
@@ -79,6 +102,10 @@ class VentanaPrincipal:
         texto_info += "Id. de 'raiz': " + info7 + "\n"
         texto_info += "Nombre objeto: " + info8 + "\n" 
         texto_info += "Gestor ventanas: " + info9 + "\n"
+        texto_info += "TEXTO DEL ARCHIVO\n" + info10 + "\n"
+        
         
         # Inserta la información en la caja de texto:
         self.tinfo.insert("1.0", texto_info)
+    
+    

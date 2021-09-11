@@ -1,21 +1,8 @@
-from tkinter import filedialog, Tk
-from tkinter import *
-from tkinter import ttk
-from VentanaPrincipal import VentanaPrincipal
-from Menu import MenuVentana
-from PartesAnalizador import Token, ErrorLexico, Imagen
+from tkinter import Tk
+from tkinter import Menu
+from tkinter import filedialog
 
-
-listaTokens = []
-
-def main():
-    ventanaPrincipal = VentanaPrincipal()
-    return
-
-def menu():
-    menuVentana = MenuVentana()
-    return
-
+#====================================Declarando función para abrir un archivo========================================
 def abrirArchivo():
     Tk().withdraw()
     archivo = filedialog.askopenfile(
@@ -49,14 +36,11 @@ def isNumero(caracter):
     else:
         return False
 
-
 def analizarArchivo(entrada):
-    global listaTokens
     fila = 1
     columna = 0 
     estado = 0
     lexActual = ""
-
     #For inicial para ver caracter por caracter
     for c in entrada:
         cter = ord(c)
@@ -731,13 +715,6 @@ def analizarArchivo(entrada):
         if estado == 2:
             #Aquí se crearía el objeto token y se añadiría a lista de tokens
             print(f"Se reconoció el token {lexActual} en la fila {fila} y la columna {(columna-(len(lexActual)-1))}")
-            if lexActual == "TITULO":
-                token = Token("TITULO", lexActual, "TITULO", fila, (columna-(len(lexActual)-1)))
-                listaTokens.append(token)
-            elif lexActual == "=":
-                token = Token("=",lexActual,"=",fila, (columna-(len(lexActual)-1)))
-                listaTokens.append(token)
-            
             lexActual = ""
             estado = 0
 
@@ -752,10 +729,38 @@ def analizarArchivo(entrada):
 
         columna += 1
 
-def error():
-    pass
+
+class MenuVentana:
+    def __init__(self):
+        self.txt = None
+        self.ventana = Tk()
+        self.ventana.title('Menu principal')
+        self.ventana.geometry("400x400")
+
+        #Se crea el menú de la ventana
+        self.miMenu = Menu(self.ventana, tearoff=0)
+        self.ventana.configure(menu=self.miMenu)
         
-if __name__ == "__main__":
-    txt = abrirArchivo()
-    analizarArchivo(txt) 
-    print(listaTokens)
+        #Creando una sección
+        self.menuPrincipal = Menu(self.miMenu)
+        self.miMenu.add_command(label="Cargar Archivo", command=self.cargarArchivo)
+        self.miMenu.add_command(label="Analizar", command=self.analizar)
+        self.miMenu.add_command(label="Reportes", command=self.verInfo)
+        self.miMenu.add_command(label="Salir", command=self.verInfo)
+        
+        
+        self.ventana.mainloop()
+    
+    def cargarArchivo(self):
+        self.txt = abrirArchivo()
+        
+    def analizar(self):
+        if(self.txt != None):
+            analizarArchivo(self.txt)
+        else:
+            print("No se ha cargado ningun archivo")
+
+    def verInfo(self):
+        print("prueba1")
+        
+

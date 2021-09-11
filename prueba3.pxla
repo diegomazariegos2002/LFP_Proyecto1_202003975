@@ -1,0 +1,10 @@
+TITULO="Pokeball";
+        ANCHO=300;
+        ALTO=300;
+        FILAS=12;
+        COLUMNAS=12;
+        CELDAS = {
+			[4,0,TRUE,#000000]
+			[5,0,TRUE,#000000]
+		};
+        FILTROS = MIRRORX,MIRRORY;

@@ -7,6 +7,8 @@ from PartesAnalizador import Token, ErrorLexico, Imagen
 
 
 listaTokens = []
+listaErrores = []
+listadoImagenes = []
 
 def main():
     ventanaPrincipal = VentanaPrincipal()
@@ -49,13 +51,14 @@ def isNumero(caracter):
     else:
         return False
 
-
 def analizarArchivo(entrada):
     global listaTokens
+    global listaErrores
     fila = 1
     columna = 0 
     estado = 0
     lexActual = ""
+    ancho_Alto_Filas_Columnas = []
 
     #For inicial para ver caracter por caracter
     for c in entrada:
@@ -65,9 +68,15 @@ def analizarArchivo(entrada):
             if cter == 84:
                 lexActual += c
                 estado = 1
-            elif (isNumero(c) == True) or cter == 44 or cter == 93 or cter == 91 or cter == 125 or cter == 123 or cter == 59 or cter == 61:
+            elif cter == 44 or cter == 93 or cter == 91 or cter == 125 or cter == 123 or cter == 59 or cter == 61:
                 lexActual += c
                 estado = 2
+
+            elif (isNumero(c) == True):
+                lexActual += c
+                estado = 80
+                pass
+
             elif cter == 34:
                 lexActual += c
                 estado = 3
@@ -99,7 +108,9 @@ def analizarArchivo(entrada):
                     estado = 0
                 else:
                     #Crear error léxico
-                    print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                    #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                    errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                    listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         # I - R 
@@ -111,7 +122,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 12
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -121,7 +134,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 22
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -131,7 +146,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 32
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -141,7 +158,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 41
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -151,7 +170,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -161,7 +182,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 23
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -171,7 +194,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -184,7 +209,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -192,14 +219,20 @@ def analizarArchivo(entrada):
         elif estado == 13:
             estado = 2
 
-        #N
+        #N - L
         elif estado == 4:
             #N
             if cter == 78:
                 lexActual += c
                 estado = 14
+            #L
+            elif cter == 76:
+                lexActual += c
+                estado = 65
             else: 
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -209,7 +242,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 24
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -219,7 +254,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 33
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -229,7 +266,33 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
+                lexActual = ""
+                estado = 0
+
+        #T
+        elif estado == 65:
+            if cter == 84:
+                lexActual += c
+                estado = 66
+            else: 
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
+                lexActual = ""
+                estado = 0
+        
+        #O
+        elif estado == 66:
+            if cter == 79:
+                lexActual += c
+                estado = 2
+            else: 
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -244,7 +307,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 16
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -254,7 +319,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 25
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -269,7 +336,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 35
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -279,7 +348,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -289,7 +360,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 42
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -299,7 +372,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 47
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -309,7 +384,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -319,7 +396,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 26
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -329,7 +408,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 36
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -339,7 +420,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -354,7 +437,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 18
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -364,7 +449,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 27
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -374,7 +461,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 37
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -384,17 +473,21 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 43
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
         #N
         elif estado == 43:
-            if cter == 79:
+            if cter == 78:
                 lexActual += c
                 estado = 48
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -404,7 +497,9 @@ def analizarArchivo(entrada):
                 lexActual+=c
                 estado = 51
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -414,7 +509,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -424,7 +521,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 28
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -434,7 +533,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 38
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -444,7 +545,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 44
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -454,7 +557,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -465,7 +570,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 57
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -476,7 +583,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 58
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -487,7 +596,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 59
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -498,7 +609,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 60
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -509,7 +622,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 61
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -520,7 +635,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -530,7 +647,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 19
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -540,7 +659,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 29
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -550,7 +671,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 39
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -560,7 +683,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 45
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -570,7 +695,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 49
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -583,7 +710,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -593,7 +722,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 20
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -603,7 +734,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 30
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -613,7 +746,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 40
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -623,7 +758,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 46
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -633,7 +770,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 50
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -643,7 +782,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 52
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
         
@@ -653,7 +794,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 53
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -663,7 +806,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 54
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -673,7 +818,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 55
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -683,7 +830,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 56
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -693,7 +842,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0
 
@@ -703,7 +854,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 21
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0 
 
@@ -713,7 +866,9 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 31
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0 
 
@@ -723,19 +878,132 @@ def analizarArchivo(entrada):
                 lexActual += c
                 estado = 2
             else:
-                print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
                 lexActual = ""
                 estado = 0 
+
+        #Digito
+        elif estado == 80:
+            if isNumero(c) == True:
+                lexActual += c
+                estado = 80
+            elif cter == 59 or cter == 44:
+                lexActual += c
+                estado = 2
+            else:
+                #print(f"Error léxico, caracter invalido {c} en la fila {fila} y columna {(columna-(len(lexActual)-1))}")
+                errorLexico = ErrorLexico(c,fila,(columna-(len(lexActual)-1)))
+                listaErrores.append(errorLexico)
+                lexActual = ""
+                estado = 0 
+            pass
 
         #Estado de aceptación
         if estado == 2:
             #Aquí se crearía el objeto token y se añadiría a lista de tokens
-            print(f"Se reconoció el token {lexActual} en la fila {fila} y la columna {(columna-(len(lexActual)-1))}")
+            # print(f"Se reconoció el token {lexActual} en la fila {fila} y la columna {(columna-(len(lexActual)-1))}")
             if lexActual == "TITULO":
                 token = Token("TITULO", lexActual, "TITULO", fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
+
             elif lexActual == "=":
-                token = Token("=",lexActual,"=",fila, (columna-(len(lexActual)-1)))
+                token = Token("Asignación",lexActual,"=",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif ord(lexActual[0]) == 34:
+                token = Token("Cadena",lexActual,f"Le = [A_Z, a_z] -> Palabra = Le+ -> {chr(34)}palabra{chr(34)}",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "ANCHO":
+                token = Token("ANCHO",lexActual,"ANCHO",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "ALTO":
+                token = Token("ALTO",lexActual,"ALTO",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            # Digito;
+            elif ord(lexActual[-1]) == 59 and isNumero(lexActual[0]) == True:
+                token = Token("Entero",lexActual[0:-1],"Di = [0_9] -> Digito = Di+ -> Digito",fila, (columna-(len(lexActual[0:-1])-1)))
+                listaTokens.append(token)
+                token = Token("Punto y coma", lexActual[-1], ";", fila, (columna-(len(lexActual[-1])-1)))
+                listaTokens.append(token)
+            # ;
+            elif lexActual == ";":
+                token = Token("Punto y coma", lexActual, ";", fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "FILAS":
+                token = Token("FILAS",lexActual,"FILAS",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "COLUMNAS":
+                token = Token("COLUMNAS",lexActual,"COLUMNAS",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "CELDAS":
+                token = Token("CELDAS",lexActual,"CELDAS",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "{":
+                token = Token("Llave abre",lexActual,"{",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "}":
+                token = Token("Llave cierra",lexActual,"}",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "[":
+                token = Token("Corchete abre",lexActual,"[",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "]":
+                token = Token("Corchete cierra",lexActual,"]",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+            
+            # Digito,
+            elif ord(lexActual[-1]) == 44 and isNumero(lexActual[0]) == True:
+                token = Token("Entero",lexActual[0:-1],"Di = [0_9] -> Digito = Di+ -> Digito",fila, (columna-(len(lexActual[0:-1])-1)))
+                listaTokens.append(token)
+                token = Token("Coma", lexActual[-1], ",", fila, (columna-(len(lexActual[-1])-1)))
+                listaTokens.append(token)
+            # ,
+            elif lexActual == ",":
+                token = Token("Coma", lexActual, ",", fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "FALSE":
+                token = Token("Booleano",lexActual,"FALSE",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "TRUE":
+                token = Token("Booleano",lexActual,"TRUE",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif ord(lexActual[0]) == 35:
+                token = Token("Código de color",lexActual,"Le = [A_Z] -> Di = [0_9] -> (#(Di|Le){6}) ",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "FILTROS":
+                token = Token("FILTROS",lexActual,"FILTROS",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "MIRRORX":
+                token = Token("MIRROX",lexActual,"MIRROX",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "MIRRORY":
+                token = Token("MIRROY",lexActual,"MIRROY",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "DOUBLEMIRROR":
+                token = Token("DOUBLEMIRROR",lexActual,"DOUBLEMIRROR",fila, (columna-(len(lexActual)-1)))
+                listaTokens.append(token)
+
+            elif lexActual == "@@@@":
+                token = Token("Separador imágenes",lexActual,"@@@@",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
             
             lexActual = ""
@@ -758,4 +1026,8 @@ def error():
 if __name__ == "__main__":
     txt = abrirArchivo()
     analizarArchivo(txt) 
-    print(listaTokens)
+    for token in listaTokens:
+        token.str()
+    for error in listaErrores:
+        error.str()
+    

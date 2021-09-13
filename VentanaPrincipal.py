@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog, Tk
+from tkinter import messagebox
 
 #====================================Declarando función para abrir un archivo========================================
 def abrirArchivo():
@@ -28,6 +29,8 @@ class VentanaPrincipal:
         self.raiz = Tk()
         self.raiz.geometry('300x200')  # anchura x altura
         
+        self.raiz.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         # Asigna un color de fondo a la ventana. Si se omite
         # esta línea el fondo será gris
         self.raiz.configure(bg = 'beige') 
@@ -109,5 +112,9 @@ class VentanaPrincipal:
         # self.tinfo.insert("1.0", texto_info)
         print("TEXTO DEL ARCHIVO")
         print(texto_info)
+
+    def on_closing(self):
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.raiz.quit()
     
     

@@ -1,17 +1,24 @@
-from tkinter import Tk
-from tkinter import Menu
-from tkinter import filedialog
+from tkinter import filedialog, Tk
+from tkinter import *
+from tkinter import ttk
+from VentanaPrincipal import VentanaPrincipal
+from Menu import MenuVentana
 from PartesAnalizador import Token, ErrorLexico, Imagen
-from tkinter import messagebox
 
-#=================================================Variables globales=================================================
+
 listaTokens = []
 listaErrores = []
 listadoImagenes = []
-
 estadoError = False
 
-#====================================Declarando función para abrir un archivo========================================
+def main():
+    ventanaPrincipal = VentanaPrincipal()
+    return
+
+def menu():
+    menuVentana = MenuVentana()
+    return
+
 def abrirArchivo():
     Tk().withdraw()
     archivo = filedialog.askopenfile(
@@ -31,7 +38,6 @@ def abrirArchivo():
         print('Lectura exitosa\n')
         return texto
 
-#====================================Funciones para el analisis del archivo==========================================
 def isLetraMayusculas(caracter):
     cter = ord(caracter)
     if((cter >= 65 and cter <= 90) or (cter ==165)):
@@ -51,10 +57,6 @@ def analizarArchivo(entrada):
     global listaErrores
     global estadoError
 
-
-    listaTokens = []
-    listaErrores = []
-    listadoImagenes = []
     estadoError = False
     fila = 1
     columna = 0 
@@ -1008,9 +1010,6 @@ def analizarArchivo(entrada):
                 listaTokens.append(token)
                 token = Token("Punto y coma", lexActual[-1], ";", fila, (columna-(len(lexActual[-1])-1)))
                 listaTokens.append(token)
-
-                if estadoError == False:
-                    ancho_Alto_Filas_Columnas.append(lexActual[0:-1])
             # ;
             elif lexActual == ";":
                 token = Token("Punto y coma", lexActual, ";", fila, (columna-(len(lexActual)-1)))
@@ -1043,10 +1042,6 @@ def analizarArchivo(entrada):
             elif lexActual == "]":
                 token = Token("Corchete cierra",lexActual,"]",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
-
-                if estadoError == False:
-                    celdas.append(celda)
-                    celda = []
             
             # Digito,
             elif ord(lexActual[-1]) == 44 and isNumero(lexActual[0]) == True:
@@ -1054,9 +1049,6 @@ def analizarArchivo(entrada):
                 listaTokens.append(token)
                 token = Token("Coma", lexActual[-1], ",", fila, (columna-(len(lexActual[-1])-1)))
                 listaTokens.append(token)
-
-                if estadoError == False:
-                    celda.append(lexActual[0:-1])
             # ,
             elif lexActual == ",":
                 token = Token("Coma", lexActual, ",", fila, (columna-(len(lexActual)-1)))
@@ -1066,22 +1058,13 @@ def analizarArchivo(entrada):
                 token = Token("Booleano",lexActual,"FALSE",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
-                if estadoError == False:
-                    celda.append(lexActual)
-
             elif lexActual == "TRUE":
                 token = Token("Booleano",lexActual,"TRUE",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
-                if estadoError == False:
-                    celda.append(lexActual)
-
             elif ord(lexActual[0]) == 35:
                 token = Token("Código de color",lexActual,"Le = [A_Z] -> Di = [0_9] -> (#(Di|Le){6}) ",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
-
-                if estadoError == False:
-                    celda.append(lexActual)
 
             elif lexActual == "FILTROS":
                 token = Token("FILTROS",lexActual,"FILTROS",fila, (columna-(len(lexActual)-1)))
@@ -1091,22 +1074,13 @@ def analizarArchivo(entrada):
                 token = Token("MIRROX",lexActual,"MIRROX",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
-                if estadoError == False:
-                    filtros.append(lexActual)
-
             elif lexActual == "MIRRORY":
                 token = Token("MIRROY",lexActual,"MIRROY",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
-                if estadoError == False:
-                    filtros.append(lexActual)
-
             elif lexActual == "DOUBLEMIRROR":
                 token = Token("DOUBLEMIRROR",lexActual,"DOUBLEMIRROR",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
-
-                if estadoError == False:
-                    filtros.append(lexActual)
 
             elif lexActual == "@@@@":
                 token = Token("Separador imágenes",lexActual,"@@@@",fila, (columna-(len(lexActual)-1)))
@@ -1114,32 +1088,13 @@ def analizarArchivo(entrada):
                 
                 #Reiniciar a una nueva imagen
                 if estadoError == False:
-                    imagen = Imagen(titulo,ancho_Alto_Filas_Columnas[0],ancho_Alto_Filas_Columnas[1],
-                    ancho_Alto_Filas_Columnas[2],ancho_Alto_Filas_Columnas[3], celdas, filtros)
-                    listadoImagenes.append(imagen)
                     print(titulo)
                     titulo = ""
-                    print(ancho_Alto_Filas_Columnas)
-                    ancho_Alto_Filas_Columnas = []
-                    print(celdas)
-                    celdas = []
-                    print(filtros)
-                    filtros = []
             
             elif lexActual == "~":
                 if estadoError == False:
-                    
-                    imagen = Imagen(titulo,ancho_Alto_Filas_Columnas[0],ancho_Alto_Filas_Columnas[1],
-                    ancho_Alto_Filas_Columnas[2],ancho_Alto_Filas_Columnas[3], celdas, filtros)
-                    listadoImagenes.append(imagen)
                     print(titulo)
                     titulo = ""
-                    print(ancho_Alto_Filas_Columnas)
-                    ancho_Alto_Filas_Columnas = []
-                    print(celdas)
-                    celdas = []
-                    print(filtros)
-                    filtros = []
             
             lexActual = ""
             estado = 0
@@ -1155,46 +1110,13 @@ def analizarArchivo(entrada):
 
         columna += 1
 
-class MenuVentana:
-    def __init__(self):
-        self.txt = None
-        self.ventana = Tk()
-        self.ventana.title('Menu principal')
-        self.ventana.geometry("400x400")
-        
-        # Por medio de esto accedo a lo que sucede al dar click sobre la X para cerrar la ventana
-        self.ventana.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        #Se crea el menú de la ventana
-        self.miMenu = Menu(self.ventana, tearoff=0)
-        self.ventana.configure(menu=self.miMenu)
-        
-        #Creando una sección
-        self.menuPrincipal = Menu(self.miMenu)
-        self.miMenu.add_command(label="Cargar Archivo", command=self.cargar)
-        self.miMenu.add_command(label="Analizar", command=self.analizar)
-        self.miMenu.add_command(label="Reportes", command=self.verInfo)
-        self.miMenu.add_command(label="Salir", command=self.verInfo)
-        
-        
-        self.ventana.mainloop()
-    
-    def cargar(self):
-        self.txt = abrirArchivo()
-        self.txt += "~"
-        
-    def analizar(self):
-        global estadoError
-        if(self.txt != None):
-            analizarArchivo(self.txt)
-        else:
-            print("No se ha cargado ningun archivo")
-
-    def verInfo(self):
-        print("prueba1")
-        
-    # Metodo para cerrar la ventana 
-    def on_closing(self):
-        if messagebox.askokcancel("Quit", "Do you want to quit?"):
-            self.ventana.quit()
-
+if __name__ == "__main__":
+    txt = abrirArchivo()
+    txt += "~"
+    analizarArchivo(txt) 
+    for token in listaTokens:
+        token.str()
+    for error in listaErrores:
+        error.str()
+    print(estadoError)

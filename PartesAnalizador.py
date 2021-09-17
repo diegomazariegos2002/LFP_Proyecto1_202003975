@@ -36,90 +36,338 @@ class Imagen:
         self.filtros = filtros
 
     def Css_Imagen_Original(self, imagen):
+        #Se guarda los archivos CSS en una determinada dirección.
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.css','w', encoding='utf-8')
         
-        pass
+        #Parte de generación del cuerpo de los archivos CSS
+        withPixel = math.floor(int(imagen.ancho)/int(imagen.columnas))
+        heightPixel = math.floor(int(imagen.alto)/int(imagen.filas))
+        cuerpo = '''body {
+            background: #ffffff;      /* Background color de toda la página */
+            height: 100vh;            
+            display: flex;            /* Define contenedor flexible */
+            justify-content: center;  /* Centra horizontalmente el lienzo */
+            align-items: center;      /* Centra verticalmente el lienzo */
+            }
+
+            .canvas {
+            width: '''
+
+        cuerpo += f'''{int(imagen.ancho)}''' 
+        cuerpo += '''px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
+            height:'''
+        cuerpo += f'''{int(imagen.alto)}'''
+        cuerpo += '''px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
+            }
+
+            .pixel {
+            width: '''
+        cuerpo += f'''{withPixel}'''
+        cuerpo += '''px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            height: '''
+        cuerpo += f'''{heightPixel}'''
+        cuerpo += '''px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            float: left;
+            box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
+            }'''
+
+        #Parte del llenado de celdas
+        for celda in imagen.celdas:
+            if celda[2] == "FALSE":
+                pass
+            else:
+                cuerpo += '''.pixel:nth-child('''
+                cuerpo += f'''{self.determinar_Celda(int(imagen.filas), int(imagen.columnas), int(celda[1]) + 1, int(celda[0]) + 1)}'''
+                cuerpo += '''){
+                                background:'''
+                cuerpo += f'''{celda[3]}'''
+                cuerpo += '''; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+                                }'''
+        f.write(cuerpo)
+        f.close
+        print(f"Css generado de {imagen.titulo}")
+
+    def Css_Imagen_MirrorX(self, imagen):
+        #Se guarda los archivos CSS en una determinada dirección.
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorX.css','w', encoding='utf-8')
+        
+        #Parte de generación del cuerpo de los archivos CSS
+        withPixel = math.floor(int(imagen.ancho)/int(imagen.columnas))
+        heightPixel = math.floor(int(imagen.alto)/int(imagen.filas))
+        cuerpo = '''body {
+            background: #ffffff;      /* Background color de toda la página */
+            height: 100vh;            
+            display: flex;            /* Define contenedor flexible */
+            justify-content: center;  /* Centra horizontalmente el lienzo */
+            align-items: center;      /* Centra verticalmente el lienzo */
+            }
+
+            .canvas {
+            width: '''
+
+        cuerpo += f'''{int(imagen.ancho)}''' 
+        cuerpo += '''px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
+            height:'''
+        cuerpo += f'''{int(imagen.alto)}'''
+        cuerpo += '''px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
+            }
+
+            .pixel {
+            width: '''
+        cuerpo += f'''{withPixel}'''
+        cuerpo += '''px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            height: '''
+        cuerpo += f'''{heightPixel}'''
+        cuerpo += '''px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            float: left;
+            box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
+            }'''
+
+        #Parte del llenado de celdas
+        for celda in imagen.celdas:
+            if celda[2] == "FALSE":
+                pass
+            else:
+                cuerpo += '''.pixel:nth-child('''
+                cuerpo += f'''{self.determinar_Celda(int(imagen.filas), int(imagen.columnas), int(celda[1]) + 1,  (int(imagen.columnas) + 1) -  (int(celda[0]) + 1))}'''
+                cuerpo += '''){
+                                background:'''
+                cuerpo += f'''{celda[3]}'''
+                cuerpo += '''; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+                                }'''
+        f.write(cuerpo)
+        f.close
+        print(f"Css generado de {imagen.titulo}_MirrorX")
+
+    def Css_Imagen_MirrorY(self, imagen):
+        #Se guarda los archivos CSS en una determinada dirección.
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorY.css','w', encoding='utf-8')
+        
+        #Parte de generación del cuerpo de los archivos CSS
+        withPixel = math.floor(int(imagen.ancho)/int(imagen.columnas))
+        heightPixel = math.floor(int(imagen.alto)/int(imagen.filas))
+        cuerpo = '''body {
+            background: #ffffff;      /* Background color de toda la página */
+            height: 100vh;            
+            display: flex;            /* Define contenedor flexible */
+            justify-content: center;  /* Centra horizontalmente el lienzo */
+            align-items: center;      /* Centra verticalmente el lienzo */
+            }
+
+            .canvas {
+            width: '''
+
+        cuerpo += f'''{int(imagen.ancho)}''' 
+        cuerpo += '''px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
+            height:'''
+        cuerpo += f'''{int(imagen.alto)}'''
+        cuerpo += '''px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
+            }
+
+            .pixel {
+            width: '''
+        cuerpo += f'''{withPixel}'''
+        cuerpo += '''px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            height: '''
+        cuerpo += f'''{heightPixel}'''
+        cuerpo += '''px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            float: left;
+            box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
+            }'''
+
+        #Parte del llenado de celdas
+        for celda in imagen.celdas:
+            if celda[2] == "FALSE":
+                pass
+            else:
+                cuerpo += '''.pixel:nth-child('''
+                cuerpo += f'''{self.determinar_Celda(int(imagen.filas), int(imagen.columnas), (int(imagen.filas) + 1) - (int(celda[1]) + 1), int(celda[0]) + 1)}'''
+                cuerpo += '''){
+                                background:'''
+                cuerpo += f'''{celda[3]}'''
+                cuerpo += '''; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+                                }'''
+        f.write(cuerpo)
+        f.close
+        print(f"Css generado de {imagen.titulo}_MirrorY")
+
+    def Css_Imagen_DoubleMirror(self, imagen):
+        #Se guarda los archivos CSS en una determinada dirección.
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_DoubleMirror.css','w', encoding='utf-8')
+        
+        #Parte de generación del cuerpo de los archivos CSS
+        withPixel = math.floor(int(imagen.ancho)/int(imagen.columnas))
+        heightPixel = math.floor(int(imagen.alto)/int(imagen.filas))
+        cuerpo = '''body {
+            background: #ffffff;      /* Background color de toda la página */
+            height: 100vh;            
+            display: flex;            /* Define contenedor flexible */
+            justify-content: center;  /* Centra horizontalmente el lienzo */
+            align-items: center;      /* Centra verticalmente el lienzo */
+            }
+
+            .canvas {
+            width: '''
+
+        cuerpo += f'''{int(imagen.ancho)}''' 
+        cuerpo += '''px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
+            height:'''
+        cuerpo += f'''{int(imagen.alto)}'''
+        cuerpo += '''px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
+            }
+
+            .pixel {
+            width: '''
+        cuerpo += f'''{withPixel}'''
+        cuerpo += '''px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            height: '''
+        cuerpo += f'''{heightPixel}'''
+        cuerpo += '''px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+            float: left;
+            box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
+            }'''
+
+        #Parte del llenado de celdas
+        for celda in imagen.celdas:
+            if celda[2] == "FALSE":
+                pass
+            else:
+                cuerpo += '''.pixel:nth-child('''
+                cuerpo += f'''{self.determinar_Celda(int(imagen.filas), int(imagen.columnas),(int(imagen.filas) +1)- (int(celda[1]) + 1), (int(imagen.columnas) + 1) -  (int(celda[0]) + 1))}'''
+                cuerpo += '''){
+                                background:'''
+                cuerpo += f'''{celda[3]}'''
+                cuerpo += '''; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+                                }'''
+        f.write(cuerpo)
+        f.close
+        print(f"Css generado de {imagen.titulo}_DoubleMirror")
 
     def generar_Css_Imagen(self):
         for imagen in Menu.listadoImagenes:
-            #Se guarda los archivos CSS en una determinada dirección.
-            f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.css','w', encoding='utf-8')
-            
-            #Parte de generación del cuerpo de los archivos CSS
-            withPixel = math.floor(int(imagen.ancho)/int(imagen.columnas))
-            heightPixel = math.floor(int(imagen.alto)/int(imagen.filas))
-            cuerpo = '''body {
-                background: #ffffff;      /* Background color de toda la página */
-                height: 100vh;            
-                display: flex;            /* Define contenedor flexible */
-                justify-content: center;  /* Centra horizontalmente el lienzo */
-                align-items: center;      /* Centra verticalmente el lienzo */
-                }
+            self.Css_Imagen_Original(imagen)
+            self.Css_Imagen_MirrorX(imagen)
+            self.Css_Imagen_MirrorY(imagen)
+            self.Css_Imagen_DoubleMirror(imagen)
 
-                .canvas {
-                width: '''
+    def Html_Imagen_Original(self, imagen):
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.html','w', encoding='utf-8')
+        
+        cuerpo = f'''<!DOCTYPE html>
+                <html>
+                <head>
+                <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <link rel="stylesheet" href="{imagen.titulo}.css">
+                </head>
+                <body>
 
-            cuerpo += f'''{int(imagen.ancho)}''' 
-            cuerpo += '''px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
-                height:'''
-            cuerpo += f'''{int(imagen.alto)}'''
-            cuerpo += '''px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
-                }
+                <!-- div que representa el lienzo -->
+                <div class="canvas">
+                <!-- div que representan cada pixel, su numeración empieza desde 1 en adelante y se debe linealizar la matriz recorriendo por filas -->
+                <!-- En este caso son 16px x 16px = 256 pixeles -->'''
 
-                .pixel {
-                width: '''
-            cuerpo += f'''{withPixel}'''
-            cuerpo += '''px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
-                height: '''
-            cuerpo += f'''{heightPixel}'''
-            cuerpo += '''px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
-                float: left;
-                box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
-                }'''
+        for i in range(1, int(imagen.filas)+1):
+            for j in range(1, int(imagen.columnas)+1):
+                cuerpo += '''<div class="pixel"></div> '''
 
-            #Parte del llenado de celdas
-            for celda in imagen.celdas:
-                if celda[2] == "FALSE":
-                    pass
-                else:
-                    cuerpo += '''.pixel:nth-child('''
-                    cuerpo += f'''{self.determinar_Celda(int(imagen.filas), int(imagen.columnas), int(celda[1]) + 1, int(celda[0]) + 1)}'''
-                    cuerpo += '''){
-                                    background:'''
-                    cuerpo += f'''{celda[3]}'''
-                    cuerpo += '''; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
-                                    }'''
-            f.write(cuerpo)
-            f.close
-            print(f"Css generado de {imagen.titulo}")
+        cuerpo += '''</div>
+
+                    </body>
+                    </html>'''
+        f.write(cuerpo)
+        f.close()
+        print(f"Html generado de {imagen.titulo}")
+
+    def Html_Imagen_MirrorX(self, imagen):
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorX.html','w', encoding='utf-8')
+        
+        cuerpo = f'''<!DOCTYPE html>
+                <html>
+                <head>
+                <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <link rel="stylesheet" href="{imagen.titulo}_MirrorX.css">
+                </head>
+                <body>
+
+                <!-- div que representa el lienzo -->
+                <div class="canvas">
+                <!-- div que representan cada pixel, su numeración empieza desde 1 en adelante y se debe linealizar la matriz recorriendo por filas -->
+                <!-- En este caso son 16px x 16px = 256 pixeles -->'''
+
+        for i in range(1, int(imagen.filas)+1):
+            for j in range(1, int(imagen.columnas)+1):
+                cuerpo += '''<div class="pixel"></div> '''
+
+        cuerpo += '''</div>
+
+                    </body>
+                    </html>'''
+        f.write(cuerpo)
+        f.close()
+        print(f"Html generado de {imagen.titulo}_MirrorX")
+
+    def Html_Imagen_MirrorY(self, imagen):
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorY.html','w', encoding='utf-8')
+        
+        cuerpo = f'''<!DOCTYPE html>
+                <html>
+                <head>
+                <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <link rel="stylesheet" href="{imagen.titulo}_MirrorY.css">
+                </head>
+                <body>
+
+                <!-- div que representa el lienzo -->
+                <div class="canvas">
+                <!-- div que representan cada pixel, su numeración empieza desde 1 en adelante y se debe linealizar la matriz recorriendo por filas -->
+                <!-- En este caso son 16px x 16px = 256 pixeles -->'''
+
+        for i in range(1, int(imagen.filas)+1):
+            for j in range(1, int(imagen.columnas)+1):
+                cuerpo += '''<div class="pixel"></div> '''
+
+        cuerpo += '''</div>
+
+                    </body>
+                    </html>'''
+        f.write(cuerpo)
+        f.close()
+        print(f"Html generado de {imagen.titulo}_MirrorY")
+
+    def Html_Imagen_DoubleMirror(self, imagen):
+        f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_DoubleMirror.html','w', encoding='utf-8')
+        
+        cuerpo = f'''<!DOCTYPE html>
+                <html>
+                <head>
+                <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <link rel="stylesheet" href="{imagen.titulo}_DoubleMirror.css">
+                </head>
+                <body>
+
+                <!-- div que representa el lienzo -->
+                <div class="canvas">
+                <!-- div que representan cada pixel, su numeración empieza desde 1 en adelante y se debe linealizar la matriz recorriendo por filas -->
+                <!-- En este caso son 16px x 16px = 256 pixeles -->'''
+
+        for i in range(1, int(imagen.filas)+1):
+            for j in range(1, int(imagen.columnas)+1):
+                cuerpo += '''<div class="pixel"></div> '''
+
+        cuerpo += '''</div>
+
+                    </body>
+                    </html>'''
+        f.write(cuerpo)
+        f.close()
+        print(f"Html generado de {imagen.titulo}_DoubleMirror")
 
     def generar_Html_Imagen(self):
         for imagen in Menu.listadoImagenes:
-            f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.html','w', encoding='utf-8')
-            
-            cuerpo = f'''<!DOCTYPE html>
-                    <html>
-                    <head>
-                    <!-- Referencias a hojas de estilos, en este caso un CSS -->
-                    <link rel="stylesheet" href="{imagen.titulo}.css">
-                    </head>
-                    <body>
-
-                    <!-- div que representa el lienzo -->
-                    <div class="canvas">
-                    <!-- div que representan cada pixel, su numeración empieza desde 1 en adelante y se debe linealizar la matriz recorriendo por filas -->
-                    <!-- En este caso son 16px x 16px = 256 pixeles -->'''
-
-            for i in range(1, int(imagen.filas)+1):
-                for j in range(1, int(imagen.columnas)+1):
-                    cuerpo += '''<div class="pixel"></div> '''
-
-            cuerpo += '''</div>
- 
-                        </body>
-                        </html>'''
-            f.write(cuerpo)
-            f.close()
-            print(f"Html generado de {imagen.titulo}")
+            self.Html_Imagen_Original(imagen)
+            self.Html_Imagen_MirrorX(imagen)
+            self.Html_Imagen_MirrorY(imagen)
+            self.Html_Imagen_DoubleMirror(imagen)
 
     # print(self.determinar_Celda(int(imagen.filas), int(imagen.columnas), int(celda[1]) + 1, int(celda[0]) + 1))
     def determinar_Celda(self, filasImagen, columnasImagen, filaActual, columnaActual):

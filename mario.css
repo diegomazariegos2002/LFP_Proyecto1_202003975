@@ -1,0 +1,212 @@
+body {
+  background: #ffffff;      /* Background color de toda la página */
+  height: 100vh;            
+  display: flex;            /* Define contenedor flexible */
+  justify-content: center;  /* Centra horizontalmente el lienzo */
+  align-items: center;      /* Centra verticalmente el lienzo */
+}
+
+.canvas {
+  width: 480px;   /* Ancho del lienzo, se asocia al ANCHO de la entrada */
+  height: 480px;  /* Alto del lienzo, se asocia al ALTO de la entrada */
+}
+
+.pixel {
+  width: 30px;    /* Ancho de cada pixel, se obtiene al operar ANCHO/COLUMNAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+  height: 30px;   /* Alto de cada pixel, se obtiene al operar ALTO/FILAS (al hablar de pixeles el resultado de la división debe ser un numero entero) */
+  float: left;
+  box-shadow: 0px 0px 1px rgb(24, 23, 23); /*Si lo comentan les quita la cuadricula de fondo */
+}
+
+/* Los pixeles del 1 al 4 no estan listados, lo cual hace que queden transparentes */
+
+/* Sombrero */
+.pixel:nth-child(5), /* Esto indica que se hace referencia al pixel No. 5 */
+.pixel:nth-child(6), /* Esto indica que se hace referencia al pixel No. 6 */
+.pixel:nth-child(7), /* Etc... */
+.pixel:nth-child(8),
+.pixel:nth-child(9),
+.pixel:nth-child(10),
+.pixel:nth-child(20),
+.pixel:nth-child(21),
+.pixel:nth-child(22),
+.pixel:nth-child(23),
+.pixel:nth-child(24),
+.pixel:nth-child(25),
+.pixel:nth-child(26),
+.pixel:nth-child(27),
+.pixel:nth-child(28),
+.pixel:nth-child(29),
+
+/* Camisa */
+.pixel:nth-child(116),
+.pixel:nth-child(117),
+.pixel:nth-child(119),
+.pixel:nth-child(120),
+.pixel:nth-child(121),
+.pixel:nth-child(122),
+.pixel:nth-child(131),
+.pixel:nth-child(132),
+.pixel:nth-child(133),
+.pixel:nth-child(135),
+.pixel:nth-child(136),
+.pixel:nth-child(138),
+.pixel:nth-child(139),
+.pixel:nth-child(140),
+.pixel:nth-child(141),
+.pixel:nth-child(146),
+.pixel:nth-child(147),
+.pixel:nth-child(148),
+.pixel:nth-child(149),
+.pixel:nth-child(154),
+.pixel:nth-child(155),
+.pixel:nth-child(156){
+  background: #E41D1D; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+}
+.pixel:nth-child(157){
+  background: #E41D1D; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+}
+.pixel:nth-child(164){
+  background: #E41D1D; /* Todo lo que este agrupado separado por comas antes de esta parte { background:..... } se le va a asignar el color indicado*/
+}
+.pixel:nth-child(171){
+  background: #FFFF00;
+}
+
+/* Overol */
+.pixel:nth-child(118),
+.pixel:nth-child(134),
+.pixel:nth-child(137),
+.pixel:nth-child(150),
+.pixel:nth-child(151),
+.pixel:nth-child(152),
+.pixel:nth-child(153),
+.pixel:nth-child(165),
+.pixel:nth-child(167),
+.pixel:nth-child(168),
+.pixel:nth-child(170),
+.pixel:nth-child(181),
+.pixel:nth-child(182),
+.pixel:nth-child(183),
+.pixel:nth-child(184),
+.pixel:nth-child(185),
+.pixel:nth-child(186),
+.pixel:nth-child(196),
+.pixel:nth-child(197),
+.pixel:nth-child(198),
+.pixel:nth-child(199),
+.pixel:nth-child(200),
+.pixel:nth-child(201),
+.pixel:nth-child(202),
+.pixel:nth-child(203),
+.pixel:nth-child(212),
+.pixel:nth-child(213),
+.pixel:nth-child(214),
+.pixel:nth-child(217),
+.pixel:nth-child(218),
+.pixel:nth-child(219){
+  background: #0000FF;
+}
+
+/* Botones del overol */
+.pixel:nth-child(166),
+.pixel:nth-child(169){
+  background: #FFFF00;
+}
+
+/* Pelo */
+.pixel:nth-child(36),
+.pixel:nth-child(37),
+.pixel:nth-child(38),
+.pixel:nth-child(51),
+.pixel:nth-child(53),
+.pixel:nth-child(67),
+.pixel:nth-child(69),
+.pixel:nth-child(70),
+.pixel:nth-child(83),
+.pixel:nth-child(84),
+
+/* Zapatos */
+.pixel:nth-child(227),
+.pixel:nth-child(228),
+.pixel:nth-child(229),
+.pixel:nth-child(234),
+.pixel:nth-child(235),
+.pixel:nth-child(236),
+.pixel:nth-child(242),
+.pixel:nth-child(243),
+.pixel:nth-child(244),
+.pixel:nth-child(245),
+.pixel:nth-child(250),
+.pixel:nth-child(251),
+.pixel:nth-child(252),
+.pixel:nth-child(253){
+  background: #8B4513;
+}
+
+/* Rostro */
+.pixel:nth-child(39),
+.pixel:nth-child(40),
+.pixel:nth-child(41),
+.pixel:nth-child(43),
+.pixel:nth-child(52),
+.pixel:nth-child(54),
+.pixel:nth-child(55),
+.pixel:nth-child(56),
+.pixel:nth-child(57),
+.pixel:nth-child(59),
+.pixel:nth-child(60),
+.pixel:nth-child(61),
+.pixel:nth-child(68),
+.pixel:nth-child(71),
+.pixel:nth-child(72),
+.pixel:nth-child(73),
+.pixel:nth-child(74),
+.pixel:nth-child(76),
+.pixel:nth-child(77),
+.pixel:nth-child(78),
+.pixel:nth-child(85),
+.pixel:nth-child(86),
+.pixel:nth-child(87),
+.pixel:nth-child(88),
+.pixel:nth-child(89),
+.pixel:nth-child(101),
+.pixel:nth-child(102),
+.pixel:nth-child(103),
+.pixel:nth-child(104),
+.pixel:nth-child(105),
+.pixel:nth-child(106),
+.pixel:nth-child(107),
+.pixel:nth-child(108),
+
+/* Manos */
+.pixel:nth-child(162),
+.pixel:nth-child(163),
+.pixel:nth-child(172),
+.pixel:nth-child(173),
+.pixel:nth-child(178),
+.pixel:nth-child(179),
+.pixel:nth-child(180),
+.pixel:nth-child(187),
+.pixel:nth-child(188),
+.pixel:nth-child(189),
+.pixel:nth-child(173),
+.pixel:nth-child(194),
+.pixel:nth-child(195),
+.pixel:nth-child(204),
+.pixel:nth-child(205){
+  background: #FFE4B5;
+}
+
+/* Ojos */
+.pixel:nth-child(42),
+.pixel:nth-child(58),
+
+/* Bigote */
+.pixel:nth-child(75),
+.pixel:nth-child(90),
+.pixel:nth-child(91),
+.pixel:nth-child(92),
+.pixel:nth-child(93){
+  background: #000000;
+}

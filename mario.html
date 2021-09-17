@@ -1,8 +1,4 @@
-import imgkit
-import pathlib
-
-css = f'{pathlib.Path(__file__).parent.absolute()}/Ejemplo/mario.css'
-body = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <!-- Referencias a hojas de estilos, en este caso un CSS -->
@@ -271,11 +267,6 @@ body = '''<!DOCTYPE html>
   <div class="pixel"></div>
   <div class="pixel"></div>
 </div>
-
+ 
 </body>
-</html>'''
-
-options = {'enable-local-file-access': None}
-
-imgkit.from_string(body,f'{pathlib.Path(__file__).parent.absolute()}/Ejemplo/pruebaImagen.jpg',options=options, css = css)
-
+</html>

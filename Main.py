@@ -5,6 +5,7 @@ from VentanaPrincipal import VentanaPrincipal
 from Menu import MenuVentana
 from PartesAnalizador import Token, ErrorLexico, Imagen
 
+
 def main():
     ventanaPrincipal = VentanaPrincipal()
     return

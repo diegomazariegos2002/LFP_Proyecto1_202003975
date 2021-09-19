@@ -275,7 +275,7 @@ body = '''<!DOCTYPE html>
 </body>
 </html>'''
 
-options = {'enable-local-file-access': None}
+options = {'enable-local-file-access': None, 'width': 480, 'height': 495}
 
 imgkit.from_string(body,f'{pathlib.Path(__file__).parent.absolute()}/Ejemplo/pruebaImagen.jpg',options=options, css = css)
 

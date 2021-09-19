@@ -82,31 +82,34 @@ class VentanaPrincipal:
         # la caja de texto
         self.tinfo.delete("1.0", END)
         
-        # # Obtiene información de la ventana 'self.raiz':
-        # info1 = self.raiz.winfo_class()
-        # info2 = self.raiz.winfo_geometry()
-        # info3 = str(self.raiz.winfo_width())
-        # info4 = str(self.raiz.winfo_height())
-        # info5 = str(self.raiz.winfo_rootx())
-        # info6 = str(self.raiz.winfo_rooty())
-        # info7 = str(self.raiz.winfo_id())
-        # info8 = self.raiz.winfo_name()
-        # info9 = self.raiz.winfo_manager()
-        info10 = abrirArchivo()
+        # Obtiene información de la ventana 'self.raiz':
+        info1 = self.raiz.winfo_class()
+        info2 = self.raiz.winfo_geometry()
+        info3 = str(self.raiz.winfo_width())
+        info4 = str(self.raiz.winfo_height())
+        info5 = str(self.raiz.winfo_rootx())
+        info6 = str(self.raiz.winfo_rooty())
+        info7 = str(self.raiz.winfo_id())
+        info8 = self.raiz.winfo_name()
+        info9 = self.raiz.winfo_manager()
+        # info10 = abrirArchivo()
         
-        # # Construye una cadena de texto con toda la
-        # # información obtenida:
-        # texto_info = "Clase de 'raiz': " + info1 + "\n"
-        # texto_info += "Resolución y posición: " + info2 + "\n"
-        # texto_info += "Anchura ventana: " + info3 + "\n"
-        # texto_info += "Altura ventana: " + info4 + "\n"
-        # texto_info += "Pos. Ventana X: " + info5 + "\n"
-        # texto_info += "Pos. Ventana Y: " + info6 + "\n"
-        # texto_info += "Id. de 'raiz': " + info7 + "\n"
-        # texto_info += "Nombre objeto: " + info8 + "\n" 
-        # texto_info += "Gestor ventanas: " + info9 + "\n"
-        texto_info =  info10
+        # Construye una cadena de texto con toda la
+        # información obtenida:
+        texto_info = "Clase de 'raiz': " + info1 + "\n"
+        texto_info += "Resolución y posición: " + info2 + "\n"
+        texto_info += "Anchura ventana: " + info3 + "\n"
+        texto_info += "Altura ventana: " + info4 + "\n"
+        texto_info += "Pos. Ventana X: " + info5 + "\n"
+        texto_info += "Pos. Ventana Y: " + info6 + "\n"
+        texto_info += "Id. de 'raiz': " + info7 + "\n"
+        texto_info += "Nombre objeto: " + info8 + "\n" 
+        texto_info += "Gestor ventanas: " + info9 + "\n"
+        # texto_info =  info10
         
+        # Inserta la información en la caja de texto:
+        
+        self.tinfo.insert("1.0", texto_info)
         
         # Inserta la información en la caja de texto:
         # self.tinfo.insert("1.0", texto_info)
@@ -118,3 +121,5 @@ class VentanaPrincipal:
             self.raiz.quit()
     
     
+if __name__ == "__main__":
+    menu = VentanaPrincipal()

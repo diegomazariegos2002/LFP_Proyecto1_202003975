@@ -4,6 +4,7 @@ import pathlib
 import shutil
 import os
 import math
+import imgkit
 
 class Token:
     def __init__(self, token = None, lexema = None, expresion = None, fila = None, columna = None):
@@ -243,13 +244,21 @@ class Imagen:
         f.close
         print(f"Css generado de {imagen.titulo}_DoubleMirror")
 
+    #Genera los archivos CSS de cada imagen dependiendo tambien de que filtros se solicitaron aunque
+    #siempre crea el archivo de la imagen original.
     def generar_Css_Imagen(self):
         for imagen in Menu.listadoImagenes:
             self.Css_Imagen_Original(imagen)
-            self.Css_Imagen_MirrorX(imagen)
-            self.Css_Imagen_MirrorY(imagen)
-            self.Css_Imagen_DoubleMirror(imagen)
+            
+            if "MIRRORX" in imagen.filtros:
+                self.Css_Imagen_MirrorX(imagen)
+            if "MIRRORY" in imagen.filtros:
+                self.Css_Imagen_MirrorY(imagen)
+            if "DOUBLEMIRROR" in imagen.filtros:
+                self.Css_Imagen_DoubleMirror(imagen)
 
+    #Ademas de generar los archivos HTML se generan los archivos JPG de las imagenes Pasando el HTML a JPG
+    # Con imgkit.
     def Html_Imagen_Original(self, imagen):
         f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.html','w', encoding='utf-8')
         
@@ -278,6 +287,12 @@ class Imagen:
         f.close()
         print(f"Html generado de {imagen.titulo}")
 
+        #Generando archivo imagen
+        options = {'enable-local-file-access': None, 'width': int(imagen.ancho), 'height': (int(imagen.alto) + 15)}
+        css = f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.css'
+
+        imgkit.from_string(cuerpo,f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}.jpg',options=options, css = css)
+
     def Html_Imagen_MirrorX(self, imagen):
         f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorX.html','w', encoding='utf-8')
         
@@ -305,6 +320,11 @@ class Imagen:
         f.write(cuerpo)
         f.close()
         print(f"Html generado de {imagen.titulo}_MirrorX")
+        #Generando archivo imagen
+        options = {'enable-local-file-access': None, 'width': int(imagen.ancho), 'height': (int(imagen.alto) + 15)}
+        css = f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorX.css'
+
+        imgkit.from_string(cuerpo,f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorX.jpg',options=options, css = css)
 
     def Html_Imagen_MirrorY(self, imagen):
         f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorY.html','w', encoding='utf-8')
@@ -333,6 +353,11 @@ class Imagen:
         f.write(cuerpo)
         f.close()
         print(f"Html generado de {imagen.titulo}_MirrorY")
+        #Generando archivo imagen
+        options = {'enable-local-file-access': None, 'width': int(imagen.ancho), 'height': (int(imagen.alto) + 15)}
+        css = f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorY.css'
+
+        imgkit.from_string(cuerpo,f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_MirrorY.jpg',options=options, css = css)
 
     def Html_Imagen_DoubleMirror(self, imagen):
         f = open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_DoubleMirror.html','w', encoding='utf-8')
@@ -361,13 +386,24 @@ class Imagen:
         f.write(cuerpo)
         f.close()
         print(f"Html generado de {imagen.titulo}_DoubleMirror")
+        #Generando archivo imagen
+        options = {'enable-local-file-access': None, 'width': int(imagen.ancho), 'height': (int(imagen.alto) + 15)}
+        css = f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_DoubleMirror.css'
 
+        imgkit.from_string(cuerpo,f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{imagen.titulo}_DoubleMirror.jpg',options=options, css = css)
+
+    #Genera los archivos HTML de cada imagen dependiendo tambien de que filtros se solicitaron aunque
+    #siempre crea el archivo de la imagen original. Cabe recalcar que estos siempre se generan despues 
+    #de los archivos CSS puesto que los archivos HTML extraen las propiedades definidas en los CSS.
     def generar_Html_Imagen(self):
         for imagen in Menu.listadoImagenes:
             self.Html_Imagen_Original(imagen)
-            self.Html_Imagen_MirrorX(imagen)
-            self.Html_Imagen_MirrorY(imagen)
-            self.Html_Imagen_DoubleMirror(imagen)
+            if "MIRRORX" in imagen.filtros:
+                self.Html_Imagen_MirrorX(imagen)
+            if "MIRRORY" in imagen.filtros:
+                self.Html_Imagen_MirrorY(imagen)
+            if "DOUBLEMIRROR" in imagen.filtros:
+                self.Html_Imagen_DoubleMirror(imagen)
 
     # print(self.determinar_Celda(int(imagen.filas), int(imagen.columnas), int(celda[1]) + 1, int(celda[0]) + 1))
     def determinar_Celda(self, filasImagen, columnasImagen, filaActual, columnaActual):

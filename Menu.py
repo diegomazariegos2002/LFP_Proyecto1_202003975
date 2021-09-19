@@ -1,12 +1,16 @@
 from tkinter import Tk
 from tkinter import Menu
 from tkinter import filedialog
+from typing import Text
 from PartesAnalizador import Token, ErrorLexico, Imagen
 from tkinter import messagebox
 from tkinter import ttk
-from tkinter import Button
+from tkinter import Button, Label, messagebox
 import webbrowser
 import imgkit
+from PIL import ImageTk, Image
+import pathlib
+
 
 #=================================================Variables globales=================================================
 listaTokens = []
@@ -1166,6 +1170,7 @@ class MenuVentana:
         self.ventana = Tk()
         self.ventana.title('Menu principal')
         self.ventana.geometry("700x400")
+        self.ventana.configure(bg = 'white')
         
         # Por medio de esto accedo a lo que sucede al dar click sobre la X para cerrar la ventana
         self.ventana.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -1174,30 +1179,96 @@ class MenuVentana:
         self.miMenu = Menu(self.ventana, tearoff=0)
         self.ventana.configure(menu=self.miMenu)
         
-        #Creando una sección
+        #Creando una sección/SubMenú esta es la barrita que aparecere arriba en la ventana
         self.menuPrincipal = Menu(self.miMenu)
         self.miMenu.add_command(label="Cargar Archivo", command=self.cargar)
         self.miMenu.add_command(label="Analizar", command=self.analizar)
         self.miMenu.add_command(label="Reportes", command=self.generarReportes)
         self.miMenu.add_command(label="Salir", command=self.on_closing)
+        
+        #ComboBox
         listadoNombreImagenes = []
         self.myComboBox = ttk.Combobox(self.ventana, state= "readonly", value = listadoNombreImagenes)
         self.myComboBox.bind("<<ComboboxSelected>>", self.comboClick)
-        self.myComboBox.pack()
-        self.myComboBox.grid(row = 0, column = 0)
+        self.myComboBox.place(x=10, y = 10)
+        
+        #Botones
         self.buttonOriginal = Button(self.ventana, text = "Imagen original", command = self.mostrarOriginal)
-        self.buttonOriginal.grid(row = 2, column= 0)
-        self.buttonMirrorX = Button(self.ventana, text = "Filtro Mirror X", command = self.mostrarOriginal)
-        self.buttonMirrorX.grid(row = 4, column= 0)
-        self.buttonMirrorY = Button(self.ventana, text = "Filtro Mirror Y", command = self.mostrarOriginal)
-        self.buttonMirrorY.grid(row = 6, column= 0)
-        self.buttonDoubleMirror = Button(self.ventana, text = "Filtro", command = self.mostrarOriginal)
-        self.buttonDoubleMirror.grid(row = 8, column= 0)
+        self.buttonOriginal.place(x = 10, y = 100)
+        
+        self.buttonMirrorX = Button(self.ventana, text = "Filtro Mirror X", command = self.mostrarMirrorX)
+        self.buttonMirrorX.place(x = 10, y = 150)
+        
+        self.buttonMirrorY = Button(self.ventana, text = "Filtro Mirror Y", command = self.mostrarMirrorY)
+        self.buttonMirrorY.place(x = 10, y = 200)
+
+        self.buttonDoubleMirror = Button(self.ventana, text = "Filtro DoubleMirror", command = self.mostrarDoubleMirror)
+        self.buttonDoubleMirror.place(x = 10, y = 250)
+
+        #Label que manejara las imagenes
+        # x = f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/Pokeball.jpg'
+        # print(x)
+        # img = Image.open(x)
+        # img = img.resize((250, 250), Image.ANTIALIAS)
+        # img = ImageTk.PhotoImage(img)
+        # self.labelImagen = Label(self.ventana, image = img)
+        # self.labelImagen.place(x = 200, y = 100)
+        
         
         self.ventana.mainloop()
-    
+
+    #========================================Metodos para mostrar las imagenes======================================
+
     def mostrarOriginal(self):
-        print("Hola")
+        try:
+            nombreImagen = self.myComboBox.get()
+            img = Image.open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{nombreImagen}.jpg')
+            new_img = img.resize((300, 256))
+            render = ImageTk.PhotoImage(new_img)
+            img1 = Label(self.ventana, image=render)
+            img1.image = render
+            img1.place(x=200, y = 100)
+        except:
+            messagebox.showwarning('ADVERTENCIA', 'La opcion actual no ha sido generada.')
+
+    def mostrarMirrorX(self):
+        try:
+            nombreImagen = self.myComboBox.get()
+            img = Image.open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{nombreImagen}_MirrorX.jpg')
+            new_img = img.resize((300, 256))
+            render = ImageTk.PhotoImage(new_img)
+            img1 = Label(self.ventana, image=render)
+            img1.image = render
+            img1.place(x=200, y = 100)
+        except:
+            messagebox.showwarning('ADVERTENCIA', 'El filtro solicitado no existe. Revisar archivo de entrada.')
+
+    def mostrarMirrorY(self):
+        try:
+            nombreImagen = self.myComboBox.get()
+            img = Image.open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{nombreImagen}_MirrorY.jpg')
+            new_img = img.resize((300, 256))
+            render = ImageTk.PhotoImage(new_img)
+            img1 = Label(self.ventana, image=render)
+            img1.image = render
+            img1.place(x=200, y = 100)
+        except:
+            messagebox.showwarning('ADVERTENCIA', 'El filtro solicitado no existe. Revisar archivo de entrada.')
+
+    def mostrarDoubleMirror(self):
+        try:
+            nombreImagen = self.myComboBox.get()
+            img = Image.open(f'{pathlib.Path(__file__).parent.absolute()}/Imagenes/{nombreImagen}_DoubleMirror.jpg')
+            new_img = img.resize((300, 256))
+            render = ImageTk.PhotoImage(new_img)
+            img1 = Label(self.ventana, image=render)
+            img1.image = render
+            img1.place(x=200, y = 100)
+        except:
+            messagebox.showwarning('ADVERTENCIA', 'El filtro solicitado no existe. Revisar archivo de entrada.')
+    
+    
+    #===========================================Metodos para el funcionamiento básico de la app=======================
 
     def cargar(self):
         self.txt = abrirArchivo()
@@ -1225,8 +1296,8 @@ class MenuVentana:
 
     #se manda a llamar cuando se selecciona un item del combo.
     def comboClick(self, event):
-        print(self.myComboBox.get())
-
+        self.mostrarOriginal()
+        
     def generarReportes(self):
         if(self.txt != None):
             #abrir o crear el reporte

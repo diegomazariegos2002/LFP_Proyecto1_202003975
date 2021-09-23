@@ -1170,7 +1170,7 @@ class MenuVentana:
         self.ventana = Tk()
         self.ventana.title('Menu principal')
         self.ventana.geometry("700x400")
-        self.ventana.configure(bg = 'white')
+        self.ventana.configure(bg = 'antique white')
         
         # Por medio de esto accedo a lo que sucede al dar click sobre la X para cerrar la ventana
         self.ventana.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -1217,7 +1217,7 @@ class MenuVentana:
         
         self.ventana.mainloop()
 
-    #========================================Metodos para mostrar las imagenes======================================
+    #====================================Metodos para mostrar las imagenes======================================
 
     def mostrarOriginal(self):
         try:
@@ -1268,7 +1268,7 @@ class MenuVentana:
             messagebox.showwarning('ADVERTENCIA', 'El filtro solicitado no existe. Revisar archivo de entrada.')
     
     
-    #===========================================Metodos para el funcionamiento básico de la app=======================
+    #===============================Metodos para el funcionamiento básico de la app=======================
 
     def cargar(self):
         self.txt = abrirArchivo()

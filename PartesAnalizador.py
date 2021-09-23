@@ -266,6 +266,7 @@ class Imagen:
                 <html>
                 <head>
                 <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <meta charset="utf-8">
                 <link rel="stylesheet" href="{imagen.titulo}.css">
                 </head>
                 <body>
@@ -300,6 +301,7 @@ class Imagen:
                 <html>
                 <head>
                 <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <meta charset="utf-8">
                 <link rel="stylesheet" href="{imagen.titulo}_MirrorX.css">
                 </head>
                 <body>
@@ -333,6 +335,7 @@ class Imagen:
                 <html>
                 <head>
                 <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <meta charset="utf-8">
                 <link rel="stylesheet" href="{imagen.titulo}_MirrorY.css">
                 </head>
                 <body>
@@ -366,6 +369,7 @@ class Imagen:
                 <html>
                 <head>
                 <!-- Referencias a hojas de estilos, en este caso un CSS -->
+                <meta charset="utf-8">
                 <link rel="stylesheet" href="{imagen.titulo}_DoubleMirror.css">
                 </head>
                 <body>

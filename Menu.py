@@ -1097,14 +1097,14 @@ def analizarArchivo(entrada):
                 listaTokens.append(token)
 
             elif lexActual == "MIRRORX":
-                token = Token("MIRROX",lexActual,"MIRROX",fila, (columna-(len(lexActual)-1)))
+                token = Token("MIRRORX",lexActual,"MIRRORX",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
                 if estadoError == False:
                     filtros.append(lexActual)
 
             elif lexActual == "MIRRORY":
-                token = Token("MIRROY",lexActual,"MIRROY",fila, (columna-(len(lexActual)-1)))
+                token = Token("MIRRORY",lexActual,"MIRRORY",fila, (columna-(len(lexActual)-1)))
                 listaTokens.append(token)
 
                 if estadoError == False:
@@ -1169,9 +1169,19 @@ class MenuVentana:
         self.txt = None
         self.ventana = Tk()
         self.ventana.title('Menu principal')
-        self.ventana.geometry("700x400")
+        #Posicionar ventana en el centro
+        self.ancho_ventana = 700
+        self.alto_ventana = 400
+
+        self.x_ventana = self.ventana.winfo_screenwidth() // 2 - self.ancho_ventana // 2
+        self.y_ventana = self.ventana.winfo_screenheight() // 2 - self.alto_ventana // 2
+
+        self.posicion = str(self.ancho_ventana) + "x" + str(self.alto_ventana) + "+" + str(self.x_ventana) + "+" + str(self.y_ventana)
+        self.ventana.geometry(self.posicion)
+
         self.ventana.configure(bg = 'antique white')
-        
+        self.ventana.resizable(False, False)
+
         # Por medio de esto accedo a lo que sucede al dar click sobre la X para cerrar la ventana
         self.ventana.protocol("WM_DELETE_WINDOW", self.on_closing)
 
@@ -1271,28 +1281,35 @@ class MenuVentana:
     #===============================Metodos para el funcionamiento básico de la app=======================
 
     def cargar(self):
-        self.txt = abrirArchivo()
-        self.txt += "~"
+        try:
+            self.txt = abrirArchivo()
+            self.txt += "~"
+        except:
+            messagebox.showwarning('ADVERTENCIA', 'No se selecciono ningun archivo.')
+
         
     def analizar(self):
         #Si el cargado se hizo correctamente
         if(self.txt != None):
-            #Se realiza el proceso de lectura del archivo (analisis)
-            analizarArchivo(self.txt)
-            #Creando listado de nombres de la imagen.
-            listadoNombreImagenes = []
-            for i in listadoImagenes:
-                listadoNombreImagenes.append(i.titulo)
-            #Se agregan los nuevos titulos de imagenes al menu.
-            self.myComboBox["value"] = listadoNombreImagenes
-            #Se muestra el combo con la posicion 0 de primero.
-            self.myComboBox.current(0) 
-            #Se generan los archivos de la imagen
-            imagenBase = Imagen()
-            imagenBase.generar_Archivos()
-
+            try:
+                #Se realiza el proceso de lectura del archivo (analisis)
+                analizarArchivo(self.txt)
+                #Creando listado de nombres de la imagen.
+                listadoNombreImagenes = []
+                for i in listadoImagenes:
+                    listadoNombreImagenes.append(i.titulo)
+                #Se agregan los nuevos titulos de imagenes al menu.
+                self.myComboBox["value"] = listadoNombreImagenes
+                #Se muestra el combo con la posicion 0 de primero.
+                self.myComboBox.current(0) 
+                #Se generan los archivos de la imagen
+                imagenBase = Imagen()
+                imagenBase.generar_Archivos()
+            except:
+                messagebox.showwarning('ADVERTENCIA', 'No se han podido generar las imagenes porque el archivo cargado posee errores .')
         else:
             print("No se ha cargado ningun archivo")
+            messagebox.showwarning('ADVERTENCIA', 'No se ha cargado ningun archivo.')
 
     #se manda a llamar cuando se selecciona un item del combo.
     def comboClick(self, event):
@@ -1464,6 +1481,7 @@ class MenuVentana:
             
         else:
             print("No se ha cargado ningun archivo")
+            messagebox.showwarning('ADVERTENCIA', 'No se selecciono ningun archivo.')
               
     # Metodo para cerrar la ventana 
     def on_closing(self):
